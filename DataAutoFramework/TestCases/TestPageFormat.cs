@@ -12,7 +12,7 @@ namespace DataAutoFramework.TestCases
         static TestPageFormat()
         {
             TestLinks = [
-                "https://learn.microsoft.com/en-us/python/api/azure-appconfiguration/azure.appconfiguration.azureappconfigurationclient?view=azure-python#azure-appconfiguration-azureappconfigurationclient-list-revisions"
+                "https://learn.microsoft.com/en-us/python/api/azure-ai-language-questionanswering/azure.ai.language.questionanswering.aio.questionansweringclient?view=azure-python"
                 ];
         }
 
@@ -27,7 +27,8 @@ namespace DataAutoFramework.TestCases
             var errorList = new List<string>();
 
             await page.GotoAsync(testLink);
-            var elements = await page.QuerySelectorAllAsync(".lang-python");
+            
+            var elements = (await page.QuerySelectorAllAsync(".lang-python")).Concat(await page.QuerySelectorAllAsync(".has-inner-focus code")).ToArray();
             foreach (var element in elements) {
                 var text = await element.InnerHTMLAsync();
                 if (text.StartsWith('\n') || text.StartsWith(' ') || text.StartsWith('\t' )) {
